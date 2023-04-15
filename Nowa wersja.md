@@ -4,9 +4,9 @@ Reguła może również być pominięta przy wybraniu słabego hasła.
 
 - Wygenerowane hasło nie wyświetla się już w programie. Wyświetla się tylko w pliku .txt
 
-- Zmniejszono minimalną długość hasła do 15 znaków.
+- Zmniejszono minimalną długość hasła do 16 znaków.
 
-- Zmniejszono maksymalną długość hasła do 24 znaków.
+- Zmniejszono maksymalną długość hasła do 26 znaków.
 
 - Poziom zabezpieczenia hasła zależy od ilości znaków specjalnych, cyfr oraz liter. 
 Im silniejsze zabezpieczenie tym więcej różnych znaków specjalnych, cyfr oraz liter będzie używać.
