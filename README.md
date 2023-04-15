@@ -1,9 +1,9 @@
 Napisany w Pythonie 3.9
 
-Generuje hasło do pliku w formacie .txt
+Generuje hasło i wyświetla je w pliku w formacie .txt
 
-Wymaga minimalnej wartości 15 znaków i 24 jako maksimum.
+Wymaga minimalnej wartości 16 znaków i 26 jako maksimum.
 
 Opcjonalnie wymaga podania własnej nazwy do hasła jako pierwsze maksimum 10 znaków.
 
-Im silniejsza złożoność hasła, tym więcej znaków specjalnych zostanie użytych (Znaki się nie powtarzają w jednym haśle)
+Hasło zawsze będzie zawieriało jedną dużą literę, jedną małą literę, jeden znak specjalny i jedną cyfrę niezależnie od wyboru zabezpieczenia hasła.
