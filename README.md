@@ -7,4 +7,5 @@ Im silniejsza złożoność hasła, tym więcej znaków specjalnych zostanie uż
 
 DO MODYFIKACJI:
 Dodać logikę, żeby znaki specjalne się nie powtarzały przy generowaniu hasła.
+
 Wygenerowane hasło powinno się pokazywac tylko w pliku .txt
