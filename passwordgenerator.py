@@ -4,7 +4,7 @@ import subprocess
 import platform
 
 def generate_password(length, complexity, include_name=False, reject_zero=True):
-    # Sprawdź poprawność poziomu zabezpieczenia
+    # Tym silniejsza kompleksowość, tym więcej różnych znaków program ma szansę wygenerować. Hasło generuje długość, kompleksowość, nazwę jeżeli użytkownik wybrał.
     if complexity == "słaby":
         allowed_chars = string.ascii_letters + string.digits
     elif complexity == "średni":
@@ -14,7 +14,7 @@ def generate_password(length, complexity, include_name=False, reject_zero=True):
     else:
         return None
 
-    # Jeśli hasło ma zawierać nazwę, dodaj ją na początku
+    # Opcjonalna własna nazwa do hasła
     if include_name:
         allowed_chars = allowed_chars.replace(name, "")
         password = name
@@ -23,7 +23,7 @@ def generate_password(length, complexity, include_name=False, reject_zero=True):
 
     prev_char = ''
 
-    # Generuj pozostałą część hasła
+    # Kod stara się, żeby hasło nie zawierało dwóch tych samych znaków między sobą. Nie dotyczy nazwy własnej do hasła.
     while len(password) < length - 4:  # Zmieniono długość hasła o 4 znaki
         next_char = random.choice(allowed_chars)
         if reject_zero and prev_char == '0' and next_char == '0':
@@ -31,27 +31,27 @@ def generate_password(length, complexity, include_name=False, reject_zero=True):
         password += next_char
         prev_char = next_char
 
-    # Dodaj na końcu jedną dużą literę, jedną małą literę, jeden znak specjalny i jedną cyfrę
+    # Dodaje na końcu jedną dużą literę, jedną małą literę, jeden znak specjalny i jedną cyfrę.
     password += random.choice(string.ascii_uppercase)  # Dodano jedną dużą literę
     password += random.choice(string.ascii_lowercase)  # Dodano jedną małą literę
     password += random.choice(string.punctuation.replace(":", "").replace('"', ""))  # Usunięto ":" i """
     password += random.choice(string.digits)  # Dodano jedną cyfrę
 
-    # Jeśli hasło nie może zaczynać się od zera, zmień pierwszy znak
+    # Zmienia pierwszy znak na inny, jeżeli tym pierwszym jest cyfra 0
     if reject_zero and password[0] == "0":
         allowed_chars = string.ascii_letters + string.digits + string.punctuation.replace("0", "").replace(" ", "").replace(":", "").replace('"', "")
         password = password[1:] + random.choice(allowed_chars)
 
-    # Usuń puste miejsca i spacje między znakami
+    # Usuwa puste miejsca i spacje między znakami.
     password = ''.join(password.split())
 
     return password
 
-# Ustawienie minimalnej i maksymalnej długości hasła
+# Minimalna i maksymalna długość hasła
 min_length = 16
 max_length = 26
 
-# Pobierz długość hasła i poziom złożoności od użytkownika
+# Pobiera dane o długości hasła i poziom kompleksowośći od użytkownika
 while True:
     length = input(f"Podaj długość hasła (minimum {min_length}, maksimum {max_length} znaków): ")
     if not length.isdigit() or int(length) <= 0:
@@ -90,16 +90,16 @@ while True:
     else:
         print("Niepoprawna odpowiedź. Proszę odpowiedzieć 'Tak' lub 'Nie'.")
 
-# Generuj hasło
+# Odpowiada za generowanie hasła.
 password = generate_password(int(length), complexity, include_name=include_name, reject_zero=True)
 
 if password:
-    # Zapisz hasło do pliku
+    # Zapisuje hasło do pliku .txt
     with open("haslo.txt", "w") as file:
         file.write("Wygenerowane hasło: " + password)
     print("Hasło zostało zapisane w pliku haslo.txt")
 
-    # Otwórz plik .txt w odpowiednim edytorze tekstu na podstawie systemu operacyjnego
+    # Otwiera plik .txt w odpowiednim edytorze tekstu na podstawie danego systemu operacyjnego
     system = platform.system()
     if system == "Darwin":  # macOS
         subprocess.run(["open", "haslo.txt"])
@@ -111,3 +111,4 @@ if password:
         print("Nieobsługiwany system operacyjny.")
 else:
     print("Nie udało się wygenerować hasła.")
+
