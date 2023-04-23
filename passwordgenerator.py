@@ -24,18 +24,12 @@ def generate_password(length, complexity, include_name=False, reject_zero=True):
     prev_char = ''
 
     # Kod stara się, żeby hasło nie zawierało dwóch tych samych znaków między sobą. Nie dotyczy nazwy własnej do hasła.
-    while len(password) < length - 4:  # Zmieniono długość hasła o 4 znaki
+    while len(password) < length - 0:  
         next_char = random.choice(allowed_chars)
         if reject_zero and prev_char == '0' and next_char == '0':
             continue
         password += next_char
         prev_char = next_char
-
-    # Dodaje na końcu jedną dużą literę, jedną małą literę, jeden znak specjalny i jedną cyfrę.
-    password += random.choice(string.ascii_uppercase)  # Dodano jedną dużą literę
-    password += random.choice(string.ascii_lowercase)  # Dodano jedną małą literę
-    password += random.choice(string.punctuation.replace(":", "").replace('"', ""))  # Usunięto ":" i """
-    password += random.choice(string.digits)  # Dodano jedną cyfrę
 
     # Zmienia pierwszy znak na inny, jeżeli tym pierwszym jest cyfra 0
     if reject_zero and password[0] == "0":
@@ -48,8 +42,15 @@ def generate_password(length, complexity, include_name=False, reject_zero=True):
     return password
 
 # Minimalna i maksymalna długość hasła
-min_length = 16
-max_length = 26
+min_length = 20
+max_length = 32
+
+length = random.randint(11, 20)
+password = ''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(length-4))
+password += random.choice(string.ascii_uppercase)
+password += random.choice(string.ascii_lowercase)
+password += random.choice(string.punctuation.replace(":", "").replace('"', ""))
+password += random.choice(string.digits)
 
 # Pobiera dane o długości hasła i poziom kompleksowośći od użytkownika
 while True:
@@ -111,4 +112,3 @@ if password:
         print("Nieobsługiwany system operacyjny.")
 else:
     print("Nie udało się wygenerować hasła.")
-
