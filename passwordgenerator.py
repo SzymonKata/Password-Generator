@@ -24,7 +24,7 @@ def generate_password(length, complexity, include_name=False, reject_zero=True):
     prev_char = ''
 
     # Kod stara się, żeby hasło nie zawierało dwóch tych samych znaków między sobą. Nie dotyczy nazwy własnej do hasła.
-    while len(password) < length - 0:  
+    while len(password) < length - 2:
         next_char = random.choice(allowed_chars)
         if reject_zero and prev_char == '0' and next_char == '0':
             continue
@@ -44,13 +44,6 @@ def generate_password(length, complexity, include_name=False, reject_zero=True):
 # Minimalna i maksymalna długość hasła
 min_length = 20
 max_length = 32
-
-length = random.randint(11, 20)
-password = ''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(length-4))
-password += random.choice(string.ascii_uppercase)
-password += random.choice(string.ascii_lowercase)
-password += random.choice(string.punctuation.replace(":", "").replace('"', ""))
-password += random.choice(string.digits)
 
 # Pobiera dane o długości hasła i poziom kompleksowośći od użytkownika
 while True:
@@ -93,6 +86,17 @@ while True:
 
 # Odpowiada za generowanie hasła.
 password = generate_password(int(length), complexity, include_name=include_name, reject_zero=True)
+
+length = random.randint(11, 20)
+password += random.choice(string.ascii_letters + string.digits + string.punctuation)
+if not any(char.isupper() for char in password):
+         password += random.choice(string.ascii_uppercase)
+if not any(char.islower() for char in password):
+         password += random.choice(string.ascii_lowercase)
+if not any(char in string.punctuation.replace(":", "").replace('"', "") for char in password):
+         password += random.choice(string.punctuation.replace(":", "").replace('"', ""))
+if not any(char.isdigit() for char in password):
+         password += random.choice(string.digits)
 
 if password:
     # Zapisuje hasło do pliku .txt
